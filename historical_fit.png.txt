@@ -1,0 +1,44 @@
+# historical_fit.png 
+# Gráfico histórico comparado con modelo
+
+# plot_historical_fit.py
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import joblib
+import seaborn as sns
+
+# Cargar el dataset completo
+df = pd.read_csv("merged_features.csv")
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Cargar modelo entrenado
+model = joblib.load("btc_model.pkl")
+
+# Seleccionar columnas predictoras (X) y objetivo (y)
+features = [
+    'Interest_Rate', 'Global_Inflation', 'Active_Addresses', 'Whale_Volume',
+    'HODL_Ratio', 'Fear_Greed_Index', 'Google_Trend_Score',
+    'Institutional_Flow_Index', 'Regulatory_Score',
+    'Tech_Adoption_Score', 'Market_Depth', 'Futures_Open_Interest'
+]
+X = df[features]
+y_true = df['BTC_Close']
+
+# Predicción del modelo sobre los mismos datos de entrenamiento
+y_pred = model.predict(X)
+
+# Graficar resultados
+sns.set(style="whitegrid", rc={"figure.figsize": (14, 6)})
+
+plt.plot(df['Date'], y_true, label='BTC Precio Real', color='blue', linewidth=2)
+plt.plot(df['Date'], y_pred, label='Predicción del Modelo', color='red', linestyle='--', linewidth=2)
+plt.title("🧠 Ajuste del Modelo sobre Datos Históricos de BTC", fontsize=16)
+plt.xlabel("Fecha")
+plt.ylabel("Precio de BTC (USD)")
+plt.legend()
+plt.tight_layout()
+
+# Guardar gráfico
+plt.savefig("historical_fit.png")
+print("✅ Gráfico guardado como 'historical_fit.png'")
