@@ -1,4 +1,6 @@
 # model_train.py
+# Entrenamiento de modelo ML (SVR) y validación sobre histórico
+
 import pandas as pd
 from sklearn.svm import SVR
 from sklearn.preprocessing import StandardScaler
