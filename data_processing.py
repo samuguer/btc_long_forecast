@@ -1,4 +1,6 @@
 # data_processing.py
+# Limpieza, fusión y preparación de dataset completo
+
 import pandas as pd
 
 def merge_datasets():
