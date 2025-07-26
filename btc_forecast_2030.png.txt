@@ -1,0 +1,28 @@
+# btc_forecast_2030.png 
+# Predicción gráfica 2025–2030
+
+# plot_forecast.py
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Cargar las predicciones futuras
+df = pd.read_csv("btc_forecast_2030.csv")
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Estilo del gráfico
+sns.set(style="whitegrid", rc={"figure.figsize": (12, 6)})
+
+# Graficar
+plt.plot(df['Date'], df['Predicted_BTC_Price'], marker='o', color='green', linewidth=2.5)
+plt.title("📈 Predicción del Precio de Bitcoin (2025–2030)", fontsize=16)
+plt.xlabel("Fecha")
+plt.ylabel("Precio Predicho de BTC (USD)")
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.tight_layout()
+
+# Guardar gráfico
+plt.savefig("btc_forecast_2030.png")
+print("✅ Gráfico guardado como 'btc_forecast_2030.png'")
