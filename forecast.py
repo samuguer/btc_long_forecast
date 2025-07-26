@@ -1,4 +1,6 @@
 # forecast.py
+# Predicción 2025–2030 usando variables extrapoladas
+
 import pandas as pd
 import numpy as np
 import joblib
