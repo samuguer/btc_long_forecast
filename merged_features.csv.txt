@@ -1,9 +1,32 @@
 # merged_features.csv
 # Dataset principal resultante
 
-| Date       | BTC\_Close | Interest\_Rate | Inflation | Active\_Addresses | Whale\_Volume | Fear\_Greed | Regulation\_Score | Tech\_Adoption\_Index |
-| ---------- | ---------- | -------------- | --------- | ----------------- | ------------- | ----------- | ----------------- | --------------------- |
-| 2020-01-01 | 7200.12    | 1.50           | 2.1       | 700000            | 350000        | 30          | 0.4               | 0.2                   |
-| 2020-02-01 | 9400.33    | 1.25           | 1.9       | 730000            | 380000        | 45          | 0.4               | 0.22                  |
-| 2020-03-01 | 8600.77    | 0.75           | 1.6       | 750000            | 300000        | 20          | 0.5               | 0.25                  |
-| ...        | ...        | ...            | ...       | ...               | ...           | ...         | ...               | ...                   |
+# generate_merged_features.py
+
+import pandas as pd
+import numpy as np
+import yfinance as yf
+import random
+
+# 1. Crear fechas desde 2015 hasta 2030 (mensual)
+dates = pd.date_range(start='2015-01-01', end='2030-01-01', freq='MS')
+df = pd.DataFrame({'Date': dates})
+
+# 2. Descargar precio real de BTC
+btc = yf.download("BTC-USD", start="2015-01-01", end="2025-01-01", interval='1mo')
+btc_monthly = btc[['Close']].reset_index().rename(columns={'Date': 'BTC_Date', 'Close': 'BTC_Close'})
+btc_monthly['BTC_Date'] = btc_monthly['BTC_Date'].dt.to_period('M').dt.to_timestamp()
+df = df.merge(btc_monthly, left_on='Date', right_on='BTC_Date', how='left')
+df.drop('BTC_Date', axis=1, inplace=True)
+
+# Simular precios futuros (2025–2030) con crecimiento logarítmico
+future_btc = df['BTC_Close'].ffill()
+growth_rate = 1.12  # 12% anual compuesto
+for i in range(len(df)):
+    if pd.isna(df.loc[i, 'BTC_Close']):
+        future_btc[i] = future_btc[i - 1] * (growth_rate ** (1 / 12))  # crecimiento mensual
+
+df['BTC_Close'] = future_btc
+
+# 3. Simular tasas de interés (en %)
+df[']()
