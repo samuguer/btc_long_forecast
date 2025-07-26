@@ -1,4 +1,6 @@
 # data_fetch.py
+# Descarga datos históricos y simulados (BTC, macro, on-chain)
+
 import yfinance as yf
 import pandas as pd
 import requests
