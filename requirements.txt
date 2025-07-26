@@ -1,5 +1,14 @@
-yfinance
-pandas
-scikit-learn
-matplotlib
-joblib
+# requirements
+# dependencias necesarias para ejecutar el proyecto
+
+pandas==2.2.2
+numpy==1.26.4
+matplotlib==3.8.4
+seaborn==0.13.2
+scikit-learn==1.4.2
+yfinance==0.2.40
+joblib==1.4.2
+
+python -m venv venv
+source venv/bin/activate      # En Windows: venv\Scripts\activate
+pip install -r requirements.txt
