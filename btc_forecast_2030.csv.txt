@@ -1,0 +1,11 @@
+# btc_forecast_2030.csv 
+# Salida de predicción hasta 2030
+
+import pandas as pd
+
+# Suponiendo que `predictions` es una lista o array de precios
+df_output = pd.DataFrame({
+    "Date": future_dates,  # lista de fechas futuras
+    "Predicted_BTC_Price": predictions  # resultado del modelo
+})
+df_output.to_csv("btc_forecast_2030.csv", index=False)
